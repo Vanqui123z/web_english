@@ -13,8 +13,8 @@ export class TutorsController {
         return this.TutorService.findAll();
     }
 
-   @Get('id')
-    async findOne(@Param() id:string ){
+   @Get(':id')
+    async findOne(@Param('id') id:string ){
         return this.TutorService.findOne(id);
     }
 

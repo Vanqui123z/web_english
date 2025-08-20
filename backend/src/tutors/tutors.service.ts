@@ -18,7 +18,7 @@ export class TutorsService {
         return this.TutorModal.findById(id).exec()
     }
     async findByUserId(userId: string):Promise<Tutor | null>{
-        return this.TutorModal.findById({userId}).exec()
+        return this.TutorModal.findById(userId).exec()
 
     }
 }
