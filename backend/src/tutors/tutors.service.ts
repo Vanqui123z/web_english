@@ -6,18 +6,21 @@ import { Model } from 'mongoose';
 @Injectable()
 export class TutorsService {
 
-    constructor(@InjectModel(Tutor.name) private TutorModal:Model<TutorDocument>){}
+    constructor(@InjectModel(Tutor.name) private TutorModal: Model<TutorDocument>) { }
 
-    async create(data:Partial<Tutor> ): Promise<Tutor>{
+    async create(data: Partial<Tutor>): Promise<Tutor> {
         return this.TutorModal.create(data);
     }
-    async findAll(){
+    async findAll() {
         return this.TutorModal.find().exec();
     }
-    async findOne(id:string):Promise<Tutor|null>{
+    async updateById(id: string, data: Partial<Tutor>) {
+        return this.TutorModal.findByIdAndUpdate(id, data, { new: true });
+    }
+    async findOne(id: string): Promise<Tutor | null> {
         return this.TutorModal.findById(id).exec()
     }
-    async findByUserId(userId: string):Promise<Tutor | null>{
+    async findByUserId(userId: string): Promise<Tutor | null> {
         return this.TutorModal.findById(userId).exec()
 
     }

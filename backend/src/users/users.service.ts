@@ -9,7 +9,19 @@ export class UsersService {
     async create(user:Partial<User>):Promise<User>{
         return this.userModel.create(user);
     }
-    async findById(email:string):Promise<User | null>{
+    async getAll(){
+        return this.userModel.find().select("-password");
+    }
+    async updateById(id:string,data: Partial<User>){
+        return this.userModel.findByIdAndUpdate(id, data,{new : true}).select("-password");
+    }
+    async findByEmail(email:string):Promise<User | null>{
         return  this.userModel.findOne({email}).exec();
+    }
+    async findById(id:string):Promise<User | null>{
+        return  this.userModel.findById(id).select("-password").lean()
+    }
+    async deleteById(id:string){
+        return this.userModel.findByIdAndDelete(id);
     }
 }
