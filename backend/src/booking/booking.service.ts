@@ -11,12 +11,12 @@ export class BookingService {
             const booking = new this.bookingModal({student:studentId, tutor:tutorId , dateTime:date});
             return booking.save() ;
      }
-     async findByTutor(tutorId:string){
+     async findByTutor(studentId:string){
        // populate : Join với collection student, chỉ lấy field name và email
-            return this.bookingModal.find({tutor:tutorId}).populate("student","email name")
+            return this.bookingModal.find({student:studentId}).populate("tutor","bio experience price");
      }
      async findByStudent(studentId:string){
-            return this.bookingModal.find({student:studentId}).populate("tutor","email name")
+            return this.bookingModal.find({student:studentId}).populate("student","email name");
 
 
      }

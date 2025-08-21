@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import  bcrypt from 'bcrypt';
 import  jwt from 'jsonwebtoken';
-const JWT_SECRET = process.env.JWT_SECRET || 'not JWT_SECRET';
+const JWT_SECRET = process.env.JWT_SECRET || 'default JWT_SECRET';
 
 
 @Injectable()
@@ -21,6 +21,7 @@ export class AuthService {
 
         const token = jwt.sign({userId:user._id,role:user.role},JWT_SECRET,{expiresIn:"4h"});
         return {token, role:user.role, name:user.name}
+        
     }
     
 }

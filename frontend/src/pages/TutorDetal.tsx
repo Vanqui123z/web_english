@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import tutorService from "../services/tutor.service";
-import { useParams } from "react-router-dom";
+import bookingService from "../services/booking.service";
+import { Link, useParams,useNavigate } from "react-router-dom";
 
 
 interface Tutor {
@@ -14,10 +15,15 @@ interface Tutor {
 
 
 function TutorDetail() {
-
+    const navigate= useNavigate()
     const { idTutor } = useParams();
     const [tutor, setTutor] = useState<Tutor | null>(null)
+    const [date,setDate] = useState( new Date())
+
+
     if (!idTutor) { return <div>"no idTutor"</div> }
+
+    
 
     // coverts link
     function toEmbedUrl(url: string): string {
@@ -30,6 +36,16 @@ function TutorDetail() {
         }
         fetchAPI();
     }, [idTutor])
+
+     const handleBooking=async()=>{
+            const bookingData =await bookingService.create(idTutor,date);
+            if(! bookingData){
+                alert("Đặt lịch thất bại !");
+            }else{
+                 alert("Đặt lịch thành công!");
+                 navigate(`/booking/student`)
+            }
+        }
 
     if (!tutor) { return (<div>loading...</div>) }
 
@@ -50,7 +66,7 @@ function TutorDetail() {
                     />
                 </div>
             )}
-            <button className="btn btn-success">Đặt lịch học thử</button>
+            <button className="btn btn-success" onClick={handleBooking} >Đặt lịch học thử</button>
         </div>
     );
 }

@@ -6,16 +6,16 @@ export type BookingDocument = HydratedDocument<Booking>;
 
 @Schema()
 export class Booking {
-  @Prop({type: Types.ObjectId , ref: "User" ,required:true})
+  @Prop({ type: Types.ObjectId, ref: "User", required: true })
   student: string;
 
-  @Prop({type: Types.ObjectId, ref:"User", required:true })
-  tutor: number;
+  @Prop({ type: Types.ObjectId, ref: "Tutor", required: true })
+  tutor: string;
 
   @Prop()
   dateTime: string;
 
-    @Prop({enum:[" pending | confirmed | cancelled"], default:"pending"})
+  @Prop({ enum: ["pending", "confirmed", "cancelled"], default: "pending" })
   status: string;
 }
 
