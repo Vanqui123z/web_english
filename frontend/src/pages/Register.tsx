@@ -22,6 +22,7 @@ function Register() {
         <select className="form-control mb-2" value={role} onChange={(e) => setRole(e.target.value)}>
           <option value="student">Student</option>
           <option value="tutor">Tutor</option>
+          <option value="admin">Admin</option>
         </select>
         <button className="btn btn-success">Register</button>
       </form>

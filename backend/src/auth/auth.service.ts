@@ -14,13 +14,14 @@ export class AuthService {
         return this.userService.create({name,password:hashed ,email,role})
     }
     async login(email:string,password:string){
-        const user = await this.userService.findById(email);
+        const user = await this.userService.findByEmail(email);
         if(!user) throw new UnauthorizedException("user not found");
         const match = bcrypt.compare(password,user.password);
         if(!match) throw new UnauthorizedException("pass not match");
 
         const token = jwt.sign({userId:user._id,role:user.role},JWT_SECRET,{expiresIn:"4h"});
-        return {token, role:user.role, name:user.name}
+        
+        return {token, role:user.role, name:user.name,status:user.status}
         
     }
     

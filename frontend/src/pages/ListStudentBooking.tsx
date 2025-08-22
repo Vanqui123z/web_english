@@ -8,15 +8,18 @@ function ListStudentBooking() {
   useEffect(() => {
           const fetchAPI = async () => {
                const bookingData =await bookingService.getByStudent();
-               console.log(bookingData)
                setBookings(bookingData)
           }
           fetchAPI();
       }, [])
 
+  if (!bookings) { return <div>Khong co quyen </div> }
+
+
   return (
    <div className="container mt-4">
   <h2 className="mb-3">Student Booked</h2>
+  <a href="/tutors" className="btn btn-danger">Back</a>
   <ul className="list-group">
     {bookings.map((b: any) => (
       <li

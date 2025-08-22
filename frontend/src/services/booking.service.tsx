@@ -1,12 +1,11 @@
 const BASE_URL = "http://localhost:3000/booking";
 const token = localStorage.getItem("token")
 
-
 class BookingAPI {
     async create(tutorId:string, date:Date) {
         const res = await fetch(`${BASE_URL}`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" ,  Authorization: "Bearer "+ token},
+            headers: { "Content-Type": "application/json" ,   "Authorization": `Bearer ${token}`},
             body: JSON.stringify({ tutorId,date  }),
         });
 
@@ -16,10 +15,11 @@ class BookingAPI {
 
         return res.json();
     }
+
     async getByStudent() {
         const res = await fetch(`${BASE_URL}/student`, {
             method: "GET",
-            headers: { "Content-Type": "application/json" ,  Authorization: "Bearer "+ token},
+            headers: { "Content-Type": "application/json" ,    "Authorization": `Bearer ${token}`},
 
         });
 
@@ -33,7 +33,7 @@ class BookingAPI {
     async getByTutor() {
         const res = await fetch(`${BASE_URL}/tutor`, {
             method: "GET",
-            headers: { "Content-Type": "application/json" ,  Authorization: "Bearer "+ token},
+            headers: { "Content-Type": "application/json" ,   "Authorization": `Bearer ${token}`},
 
         });
 

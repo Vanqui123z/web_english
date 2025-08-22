@@ -1,7 +1,9 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { TutorsService } from './tutors.service';
+import { Roles } from 'src/common/guards/role.decorator';
 
 @Controller('tutors')
+@Roles("student")
 export class TutorsController {
     constructor(private TutorService:TutorsService){}
      @Post()

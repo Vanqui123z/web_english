@@ -26,7 +26,7 @@ export class User {
   @Prop()
   avatar: string;
 
-  @Prop({enum:["active", "block"], default:"active"} )
+  @Prop({enum:["active", "blocked"], default:"active"} )
   status: string;
   @Prop()
   points: number;

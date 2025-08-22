@@ -1,36 +1,38 @@
-import { Body, Controller, Delete, Get, Param, Patch, UseGuards } from '@nestjs/common';
-import { JwtGuard } from 'src/common/guards/jwt.guards';
-import { Roles } from 'src/common/guards/role.grards';
-import { RolesGuard } from 'src/common/guards/role.guarrds';
+import { Body, Controller, Delete, Get, NotFoundException, Param, Patch, UseGuards } from '@nestjs/common';
 import { TutorsService } from 'src/tutors/tutors.service';
 import { UsersService } from 'src/users/users.service';
 
 @Controller('admin')
-@UseGuards(JwtGuard,RolesGuard)
-@Roles("admin")
 export class AdminController {
-    constructor(private user:UsersService,private tutor:TutorsService){}
+    constructor(private user: UsersService, private tutor: TutorsService) { }
 
     @Get("users")
-    ListUsers(){
+    ListUsers() {
         return this.user.getAll();
     }
+     @Get("users/:id")
+    async getUser(@Param("id") id: string) {
+        return  await this.user.findById(id);
+    }
     @Patch("users/:id/status")
-    updateUsers(@Param("id") id:string, @Body("status") status: "block"|"active"){
-        return this.user.updateById(id,{status})
+    updateUsers(@Param("id") id: string, @Body("status") status: "blocked" | "active") {
+        console.log(id)
+        return this.user.updateById(id, { status })
     }
     @Delete("users/:id")
-    deleteUser(@Param("id") id:string){
+    deleteUser(@Param("id") id: string) {
         return this.user.deleteById(id);
     }
-    @Get("tutors")
-    ListTutor(){
+    @Get("courses")
+    ListTutor() {
         return this.tutor.findAll()
     }
-    @Patch("tutors/:id")
-    updateTutor(@Param("id") id:string, @Body() body:any){
-        return this.tutor.updateById(id,body);
+    @Patch("courses/:id")
+    updateTutor(@Param("id") id: string, @Body("body") body: any) {
+        return this.tutor.updateById(id, body);
     }
+
+   
 
 
 
