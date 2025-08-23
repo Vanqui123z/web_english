@@ -1,5 +1,4 @@
 const BASE_URL = "http://localhost:3000/admin";
-const BASE_URL_USER = "http://localhost:3000";
 const token = localStorage.getItem('token');
 
 class AuthAPI {
@@ -54,7 +53,7 @@ class AuthAPI {
         return res.json();
     }
     async ListCousres() {
-        const res = await fetch(`${BASE_URL}/courses`, {
+        const res = await fetch(`${BASE_URL}/details`, {
             method: "GET",
              headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + token },
         });

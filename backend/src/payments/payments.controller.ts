@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Param, Post, Req, UseGuards } from '@nestjs/common';
 import { JwtGuard } from 'src/common/guards/jwt.guards';
 import { PaymentsService } from './payments.service';
 
@@ -7,8 +7,9 @@ import { PaymentsService } from './payments.service';
 export class PaymentsController {
     constructor(private payment:PaymentsService){}
 
-    @Post("payment")
-    async checkout(@Req() req:any, @Body() body:{amount: number, packageId: string, tutorId?: string}){
-        return this.payment.checkout(req.user.userId,body)
+    @Post(":id")
+    async checkout(@Req() req:any,@Param("id") idTutor:string , @Body() body:{amount: number, packageId: string}){
+        console.log("Thanh toán:", req.user.userId,idTutor,body);
+        return this.payment.checkout(req.user.userId,idTutor,body)
     }
 }

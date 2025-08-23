@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AuthAPI from "../services/auth.service";
+import AuthAPI from "../../services/auth.service";
 function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

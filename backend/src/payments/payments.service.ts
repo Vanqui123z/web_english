@@ -14,40 +14,27 @@ export class PaymentsService {
         return Math.floor(amount / 1000);
 
     }
-    async checkout(studentId: string, payload: { amount: number, packageId: string, tutorId?: string }) {
-        if (payload.amount <= 0) { throw new BadRequestException("invaliid amount") };
-        const points = this.ChangePoint(payload.amount);
-        // rollback if err
-        const session = await startSession();
-        session.startTransaction();
-
-        try {
-            const payment = this.PaymentModel.create([{
-                name: studentId,
-                tutor: payload.tutorId,
-                amount: payload.amount,
-                packageId: payload.packageId,
-                status: "success",
-                pointsAwarded: points,
-
-            }], { session })
-            await this.UserModel.findByIdAndUpdate(
-                studentId,
-                { $inc: { points }, },
-                { new: true, session }
-            )
-            await session.commitTransaction()
-            session.endSession();
-
-            const UserUpdated = this.UserModel.findById(studentId).select("-password")
-            return { transaction: payment[0], user: UserUpdated };
-        } catch (error) {
-            await session.abortTransaction();
-            session.endSession();
-            throw error;
-        }
-
-    }
+async checkout(studentId: string, tutorId: string, payload: { amount: number, packageId: string }) {
+  if (payload.amount <= 0) {
+    throw new BadRequestException('Invalid amount');
+  }
+  const points = this.ChangePoint(payload.amount);
+  const payment = await this.PaymentModel.create({
+    name: studentId,
+    tutor: tutorId,
+    amount: payload.amount,
+    packageId: payload.packageId,
+    status: 'success',
+    pointsAwarded: points,
+  });
+  const updatedUser = await this.UserModel.findByIdAndUpdate(
+    studentId,
+    { $inc: { points } },
+    { new: true }
+  );
+  const userUpdated = await this.UserModel.findById(studentId).select('-password');
+  return { transaction: payment, user: userUpdated };
+}
 
 
 

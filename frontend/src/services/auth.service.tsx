@@ -9,7 +9,8 @@ class AuthAPI {
     });
 
     if (!res.ok) {
-      throw new Error("Login failed");
+      const errorData = await res.json();
+      throw new Error(errorData.message || "Email hoặc mật khẩu không đúng");
     }
 
     return res.json();
@@ -24,6 +25,41 @@ class AuthAPI {
 
     if (!res.ok) {
       throw new Error("Register failed");
+    }
+
+    return res.json();
+  }
+
+  async getProfile() {
+    const token = localStorage.getItem("token");
+    const res = await fetch(`${BASE_URL}/me`, {
+      method: "GET",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+    });
+
+    if (!res.ok) {
+      throw new Error("Get profile failed");
+    }
+
+    return res.json();
+  }
+
+  async updateProfile(userData: any) {
+    const token = localStorage.getItem("token");
+    const res = await fetch(`${BASE_URL}/me`, {
+      method: "PUT",
+      headers: { 
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!res.ok) {
+      throw new Error("Update profile failed");
     }
 
     return res.json();

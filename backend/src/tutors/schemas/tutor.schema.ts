@@ -1,18 +1,18 @@
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
 
 export type TutorDocument = HydratedDocument<Tutor>;
 
 
 // Subdocument cho availability
-@Schema({ _id: false }) 
+@Schema({ _id: false })
 export class Availability {
     @Prop({ required: true })
     day: string;
 
     @Prop({ required: true })
-    time: string; 
+    time: string;
 }
 
 export const AvailabilitySchema = SchemaFactory.createForClass(Availability);
@@ -22,9 +22,9 @@ export const AvailabilitySchema = SchemaFactory.createForClass(Availability);
 @Schema()
 export class Tutor {
     _id: string
-    @Prop({ required: true })
-    // users
+    @Prop({ type: Types.ObjectId, ref: "User", required: true })
     userId: string;
+
 
     @Prop()
     bio: string;

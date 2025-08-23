@@ -19,8 +19,11 @@ export class JwtGuard implements CanActivate {
     // check token
     const req = ctx.switchToHttp().getRequest();
 
-    const auth = req.headers['authorization'];
-    const token = auth.split(" ")[1];
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      throw new Error("No token provided");
+    }
+
     if (!token) throw new UnauthorizedException('No token');
     try {
       const payload = jwt.verify(token, JWT_SECRET) as any;

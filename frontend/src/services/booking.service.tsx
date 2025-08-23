@@ -31,7 +31,7 @@ class BookingAPI {
         
     }
     async getByTutor() {
-        const res = await fetch(`${BASE_URL}/tutor`, {
+        const res = await fetch(`${BASE_URL}/courses`, {
             method: "GET",
             headers: { "Content-Type": "application/json" ,   "Authorization": `Bearer ${token}`},
 

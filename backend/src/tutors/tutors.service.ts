@@ -12,16 +12,29 @@ export class TutorsService {
         return this.TutorModal.create(data);
     }
     async findAll() {
-        return this.TutorModal.find().exec();
+        return this.TutorModal.find()
+            .populate("userId", "name email")
+            .exec();
+    }
+    async findAllCourses() {
+        return this.TutorModal.find()
     }
     async updateById(id: string, data: Partial<Tutor>) {
         return this.TutorModal.findByIdAndUpdate(id, data, { new: true });
     }
-    async findOne(id: string): Promise<Tutor | null> {
-        return this.TutorModal.findById(id).exec()
-    }
-    async findByUserId(userId: string): Promise<Tutor | null> {
-        return this.TutorModal.findById(userId).exec()
 
+    async findOne(id: string): Promise<Tutor | null> {
+        return this.TutorModal.findById(id).populate("userId", "name email")
+            .exec();
+    }
+    async findByTutorId(userId: string): Promise<Tutor | null> {
+        return this.TutorModal.findOne({ userId }).exec();
+    }
+    async findAllTutorByUser(userId: string): Promise<Tutor[]> {
+        return this.TutorModal.find({ userId }).exec();
+    }
+
+    async findByUserId(userId: string): Promise<Tutor | null> {
+        return this.TutorModal.findOne({ userId }).populate("userId", "name email").exec();
     }
 }

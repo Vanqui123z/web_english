@@ -23,9 +23,9 @@ export class AdminController {
     deleteUser(@Param("id") id: string) {
         return this.user.deleteById(id);
     }
-    @Get("courses")
+    @Get("details")
     ListTutor() {
-        return this.tutor.findAll()
+        return this.tutor.findAllCourses()
     }
     @Patch("courses/:id")
     updateTutor(@Param("id") id: string, @Body("body") body: any) {

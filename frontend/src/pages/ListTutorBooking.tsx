@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import bookingService from "../services/booking.service";
+import LogoutButton from "../components/buttonLogout";
 
 function ListStudentBooking() {
   const [bookings, setBookings] = useState([]);
@@ -8,6 +9,7 @@ function ListStudentBooking() {
   useEffect(() => {
     const fetchAPI = async () => {
       const bookingData = await bookingService.getByTutor();
+      console.log(bookingData)
       setBookings(bookingData)
     }
     fetchAPI();
@@ -18,7 +20,7 @@ function ListStudentBooking() {
     <div className="container mt-4">
       <h2 className="mb-3">Tutor Booked</h2>
       <a href="/tutors" className="btn btn-danger">Back</a>
-
+      <LogoutButton redirectTo="/" />
       <ul className="list-group">
         {bookings.map((b: any) => (
           <li
@@ -26,6 +28,7 @@ function ListStudentBooking() {
             className="list-group-item d-flex justify-content-between align-items-start"
           >
             <div>
+              <h6><b>Name:</b>{b.tutor.userId.name}</h6>
               <h6><b>Title:</b>{b.tutor.bio}</h6>
               <small>
                 <strong>Experience:</strong> {b.tutor.experience} <br />

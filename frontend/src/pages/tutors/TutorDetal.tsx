@@ -1,18 +1,23 @@
 import { useEffect, useState } from "react";
-import tutorService from "../services/tutor.service";
-import bookingService from "../services/booking.service";
+import tutorService from "../../services/tutor.service";
+import bookingService from "../../services/booking.service";
 import { Link, useParams,useNavigate } from "react-router-dom";
+
 
 
 interface Tutor {
     _id: string,
+    userId: {
+        _id: string,
+        name: string,
+        email: string
+    },
     bio: string;
     experience: string;
     price: number;
     videoUrl: string;
 
 }
-
 
 function TutorDetail() {
     const navigate= useNavigate()
@@ -38,13 +43,15 @@ function TutorDetail() {
     }, [idTutor])
 
      const handleBooking=async()=>{
-            const bookingData =await bookingService.create(idTutor,date);
-            if(! bookingData){
-                alert("Đặt lịch thất bại !");
-            }else{
-                 alert("Đặt lịch thành công!");
-                 navigate(`/booking/student`)
-            }
+           
+
+            // const bookingData =await bookingService.create(idTutor,date);
+            // if(! bookingData){
+            //     alert("Đặt lịch thất bại !");
+            // }else{
+            //      alert("Đặt lịch thành công!");
+            //      navigate(`/booking/courses`)
+            // }
         }
 
     if (!tutor) { return (<div>loading...</div>) }
@@ -52,6 +59,7 @@ function TutorDetail() {
     return (
         <div className="container mt-4">
             <h2>Thông tin giáo viên</h2>
+            <h5 className="card-title">Name Tutor: <b>{tutor.userId.name}</b></h5>
             <p><b>Kinh nghiệm:</b> {tutor.experience}</p>
             <p><b>Bio:</b> {tutor.bio}</p>
             <p><b>Giá:</b> {tutor.price} VND/buổi</p>
@@ -66,7 +74,7 @@ function TutorDetail() {
                     />
                 </div>
             )}
-            <button className="btn btn-success" onClick={handleBooking} >Đặt lịch học thử</button>
+            <button className="btn btn-success" onClick={() => navigate(`/payment/${idTutor}`)}>Đặt lịch học thử</button>
         </div>
     );
 }
