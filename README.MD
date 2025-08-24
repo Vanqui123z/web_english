@@ -1,3 +1,8 @@
+* TK: admin
+email: admin@gmail.com
+pass: 123
+* các tài khoản còn lại pass 123
+
 ## khởi tạo  
 🟢 Phần 1 – Backend (NestJS)
 1. Khởi tạo project NestJS
