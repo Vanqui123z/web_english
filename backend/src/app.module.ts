@@ -14,11 +14,15 @@ import { JwtGuard } from './common/guards/jwt.guards';
 import { RolesGuard } from './common/guards/role.guard';
 import { AdminModule } from './admin/admin.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ThrottlerModule } from '@nestjs/throttler';
+import { SeoController } from './utils/seo.controller';
 
 const MONGO_URI = process.env.MONGO_URI || "";
 console.log(MONGO_URI)
 @Module({
   imports: [
+
+    //conncect database monggodb
    ConfigModule.forRoot({
       isGlobal: true, // để dùng được ở mọi nơi
     }),
@@ -31,10 +35,18 @@ console.log(MONGO_URI)
         socketTimeoutMS: 45000,
         connectTimeoutMS: 30000,
       }),
-    }),
+    }), 
+    //chống brute-force, spam request
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60, // 60 giây
+        limit: 10, // tối đa 10 request / IP / 60s
+      },
+    ]),
+    
 
     AuthModule, UsersModule, TutorModule, BookingModule, PaymentsModule,AdminModule],
-  controllers: [AuthController],
+  controllers: [SeoController,AuthController],
   providers: [AuthService,
     { provide: APP_GUARD, useClass: JwtGuard },
     { provide: APP_GUARD, useClass: RolesGuard }],
