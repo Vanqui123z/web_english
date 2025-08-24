@@ -363,7 +363,7 @@ function Home() {
                                 </a>
                             </div>
                             <p className="text-muted mt-3 mb-0">
-                                © Lê Văn Quí 
+                                © tác giả :Lê Văn Quí ------ DH Công nghiệp HCM
                             </p>
                         </div>
                     </div>
