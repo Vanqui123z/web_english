@@ -17,7 +17,7 @@ async function bootstrap() {
   // Nếu không match API nào thì trả index.html
   app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
     if (req.path.startsWith('/api')) {
-      return next(); // cho request API đi tiếp
+      return next(); 
     }
     res.sendFile(join(__dirname, '..', 'public', 'index.html'));
   });
