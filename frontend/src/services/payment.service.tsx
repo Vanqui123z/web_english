@@ -1,5 +1,5 @@
-const BASE_URL = "http://localhost:3000/payments";
-const BASE_URL_ME = "http://localhost:3000/users/profile";
+const BASE_URL = `${import.meta.env.VITE_API_URL}/payments`;
+const BASE_URL_ME = `${import.meta.env.VITE_API_URL}/users/profile`;
 const token = localStorage.getItem('token');
 
 class AuthAPI {

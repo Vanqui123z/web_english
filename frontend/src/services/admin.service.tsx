@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000/admin";
+const BASE_URL = `${import.meta.env.VITE_API_URL}/admin`;
 const token = localStorage.getItem('token');
 
 class AuthAPI {

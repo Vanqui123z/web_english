@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000/auth";
+const BASE_URL = `${import.meta.env.VITE_API_URL}/auth`;
 
 class AuthAPI {
   async login(email: string, password: string) {
