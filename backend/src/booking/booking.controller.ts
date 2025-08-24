@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Req, Body, NotFoundException } from '@nestjs/common';
+import { Controller, Post, Get, Req, Body, NotFoundException, Param, Patch } from '@nestjs/common';
 import { BookingService } from './booking.service';
 import getUserId from 'src/utils/user.decorator';
 import { Roles } from 'src/common/guards/role.decorator';
@@ -22,15 +22,17 @@ export class BookingController {
         if (!tutors || tutors.length === 0) {
             throw new NotFoundException("No tutors found for this user");
         }
-
         // 2. gom tất cả tutor._id
         const tutorIds = tutors.map(t => t._id);
-
         // 3. tìm tất cả học viên duy nhất mà các tutor này đã dạy
         return this.BookingService.findStudentsByTutor(tutorIds);
     }
-  
 
+    @Roles("tutor")
+    @Patch("status/:bookingId")
+    async updateBooking(@Param("bookingId") bookingId: string, @Body("status") status: "confirmed" | "rejected") {
+        return this.BookingService.updateBooking(bookingId, status);
+    }
 
     @Roles("student")
     @Get("courses")

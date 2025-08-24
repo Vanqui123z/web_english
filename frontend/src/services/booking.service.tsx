@@ -44,5 +44,16 @@ class BookingAPI {
         return res.json();
         
     }
+    async updateStatus(bookingId: string, status: string) {
+        const res = await fetch(`${BASE_URL}/status/${bookingId}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
+            body: JSON.stringify({ status }),
+        });
+        if (!res.ok) {
+            throw new Error("Update booking status failed");
+        }
+        return res.json();
+    }
 }
 export default new BookingAPI;

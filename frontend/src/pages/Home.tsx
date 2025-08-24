@@ -87,10 +87,7 @@ function Home() {
                                     <i className="fas fa-chalkboard-teacher me-1"></i>
                                     Gia sư
                                 </Link>
-                                <Link className="nav-link me-3" to="/booking/courses">
-                                    <i className="fas fa-calendar me-1"></i>
-                                    Lịch học
-                                </Link>
+                               
                                 <button 
                                     className="btn btn-outline-danger"
                                     onClick={() => {

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Body, Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { Booking } from './schemas/booking.chema';
 import { InjectModel } from '@nestjs/mongoose';
@@ -22,14 +22,16 @@ export class BookingService {
               // lấy danh sách booking có cả student & tutor
               const bookings = await this.bookingModal
                      .find({ tutor: { $in: stringTutorIds } })
-                     .populate("student", "name email") // lấy info student
-                     .populate("tutor", "bio price")    // lấy info tutor
+                     .populate("student", "name email") 
+                     .populate("tutor", "bio price")    
                      .lean();
 
               // lọc ra student duy nhất theo tutor
               const result = bookings.map(b => ({
+                     bookingId: b._id,
                      student: b.student,
-                     tutor: b.tutor
+                     tutor: b.tutor,
+                     status: b.status
               }));
 
               return result;
@@ -51,6 +53,9 @@ export class BookingService {
                                    select: "name email"
                             }
                      });
+       }
+       async updateBooking(bookingId: string, @Body("status") status: string) {
+              return this.bookingModal.findByIdAndUpdate(bookingId, { status }, { new: true });
        }
 
 }

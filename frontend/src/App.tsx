@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Register from './pages/auth/Register';
 import Login from './pages/auth/Login';
 import TutorsList from './pages/tutors/TutorsList';
@@ -11,32 +11,60 @@ import Home from './pages/Home';
 import UserProfile from './pages/UserProfile';
 import TutorProfile from './pages/TutorProfile';
 import Payment from './pages/Payment';
+import RoleRoute from './RoleRoute';
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
-        <Route path='/'    element={<Home/>}/>
-        <Route path='/login'    element={<Login/>}/>
-        <Route path='/register' element={<Register/>}/>
+      <Route path="/tutors" element={<TutorsList />} />
+      <Route
+        path="/tutors/create"
+        element={<RoleRoute element={<CreateTutor />} allowedRoles={["tutor"]} />}
+      />
+      <Route path="/tutors/:idTutor" element={<TutorDetail />} />
 
-        <Route path='/tutors' element={<TutorsList/>}/>
-        <Route path='/tutors/create' element={<CreateTutor/>}/>
-        <Route path='/tutors/:idTutor' element={<TutorDetail/>}/>
+      <Route
+        path="/booking/courses"
+        element={<RoleRoute element={<ListTuTorBooking />} allowedRoles={["student"]} />}
+      />
 
-        <Route path='booking/courses' element={<ListTuTorBooking/>}/>
+      <Route
+        path="/student"
+        element={<RoleRoute element={<ListStudentBooking />} allowedRoles={["tutor"]} />}
+      />
+      <Route
+        path="/booking/student"
+        element={<RoleRoute element={<ListStudentBooking />} allowedRoles={["tutor"]} />}
+      />
 
-        <Route path='/student' element={<ListStudentBooking/>}/>
-        <Route path='/booking/student' element={<ListStudentBooking/>}/>
+      <Route
+        path="/admin/:section"
+        element={<RoleRoute element={<AdminPage />} allowedRoles={["admin"]} />}
+      />
 
-     
-        <Route path='/admin/:section' element={<AdminPage/>}/>
-        <Route path='/user/me' element={<UserProfile/>}/>
-        <Route path='/tutor/me' element={<TutorProfile/>}/>
+      <Route
+        path="/user/me"
+        element={<RoleRoute element={<UserProfile />} allowedRoles={["student","tutor"]} />}
+      />
+      <Route
+        path="/tutor/me"
+        element={<RoleRoute element={<TutorProfile />} allowedRoles={["tutor"]} />}
+      />
 
-         <Route path="/payment/:idTutor" element={<Payment />} />
-      </Routes>
+      <Route
+        path="/payment/:idTutor"
+        element={<RoleRoute element={<Payment />} allowedRoles={["student"]} />}
+      />
+
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+
+
     </BrowserRouter>
   )
 }

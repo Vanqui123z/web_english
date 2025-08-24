@@ -70,7 +70,7 @@ function Login() {
         <button className="btn btn-primary" type="submit">Đăng nhập</button>
       </form>
     </div>
-  );
+  )
 }
 
 export default Login;

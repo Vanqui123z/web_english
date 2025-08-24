@@ -19,8 +19,10 @@ function ListStudentBooking() {
   return (
     <div className="container mt-4">
       <h2 className="mb-3">Tutor Booked</h2>
-      <a href="/tutors" className="btn btn-danger">Back</a>
-      <LogoutButton redirectTo="/" />
+      <div className="d-flex justify-content-between">
+        <a href="/tutors" className="btn btn-danger">Back</a>
+        <LogoutButton redirectTo="/" />
+      </div>
       <ul className="list-group">
         {bookings.map((b: any) => (
           <li

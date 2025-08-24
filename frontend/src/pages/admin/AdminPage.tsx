@@ -62,8 +62,8 @@ function AdminPage() {
             <div className="d-flex justify-content-between align-items-center mb-3">
                 <h3>{section === "users" ? "Users Manage" : "Information Details"}</h3>
                 <div className="btn-group">
-                    <Link to="/admin/users" className="btn btn-primary">Users</Link>
-                    <Link to="/admin/details" className="btn btn-primary">Information Details</Link>
+                    <Link to="/admin/users" className="btn btn-primary ">Users</Link>
+                    <Link to="/admin/details" className="btn btn-primary ">Information Details</Link>
                 </div>
             </div>
 
@@ -281,7 +281,7 @@ function AdminPage() {
                                                             updateCourses(course._id, { status: course.status === 'active' ? 'inactive' : 'active' });
                                                         }}
                                                     >
-                                                        {course.status === 'active' ? 'Tạm dừng' : 'Kích hoạt'}
+                                                        {course.status}
                                                     </button>
                                                 </div>
                                             </div>

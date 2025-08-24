@@ -13,16 +13,25 @@ import { AuthService } from './auth/auth.service';
 import { JwtGuard } from './common/guards/jwt.guards';
 import { RolesGuard } from './common/guards/role.guard';
 import { AdminModule } from './admin/admin.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 const MONGO_URI = process.env.MONGO_URI || "";
 console.log(MONGO_URI)
 @Module({
   imports: [
-    MongooseModule.forRoot("mongodb+srv://levanquy1923:Quyden123z@cluster0.nynvo9n.mongodb.net/web_english?retryWrites=true&w=majority&appName=Cluster0", {
-  serverSelectionTimeoutMS: 30000, // tăng timeout chọn server
-  socketTimeoutMS: 45000,          // tăng timeout query
-  connectTimeoutMS: 30000,         // tăng timeout mở kết nối
-}),
+   ConfigModule.forRoot({
+      isGlobal: true, // để dùng được ở mọi nơi
+    }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGO_URI'),
+        serverSelectionTimeoutMS: 30000,
+        socketTimeoutMS: 45000,
+        connectTimeoutMS: 30000,
+      }),
+    }),
 
     AuthModule, UsersModule, TutorModule, BookingModule, PaymentsModule,AdminModule],
   controllers: [AuthController],

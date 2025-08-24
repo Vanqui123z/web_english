@@ -231,7 +231,6 @@ function TutorProfile() {
                                     {formatPrice(tutor.price)}/buổi
                                 </span>
                             </div>
-                            <small className="text-muted">ID: {tutor._id}</small>
                         </div>
                     </div>
                 </div>
