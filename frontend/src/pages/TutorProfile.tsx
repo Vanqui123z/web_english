@@ -305,7 +305,7 @@ function TutorProfile() {
                                         {tutor.availability && tutor.availability.length > 0 ? (
                                             <div className="row g-2">
                                                 {tutor.availability.map((slot, index) => (
-                                                    <div key={slot._id} className="col-md-6">
+                                                    <div key={index} className="col-md-6">
                                                         <div className="d-flex justify-content-between align-items-center bg-light rounded p-2">
                                                             <span className="badge bg-primary">
                                                                 {getDayInVietnamese(slot.day)}

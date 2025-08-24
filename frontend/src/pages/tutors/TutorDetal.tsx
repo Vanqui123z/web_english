@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import tutorService from "../../services/tutor.service";
-import bookingService from "../../services/booking.service";
-import { Link, useParams,useNavigate } from "react-router-dom";
+import {  useParams,useNavigate } from "react-router-dom";
 
 
 
@@ -23,8 +22,6 @@ function TutorDetail() {
     const navigate= useNavigate()
     const { idTutor } = useParams();
     const [tutor, setTutor] = useState<Tutor | null>(null)
-    const [date,setDate] = useState( new Date())
-
 
     if (!idTutor) { return <div>"no idTutor"</div> }
 
@@ -42,17 +39,7 @@ function TutorDetail() {
         fetchAPI();
     }, [idTutor])
 
-     const handleBooking=async()=>{
-           
-
-            // const bookingData =await bookingService.create(idTutor,date);
-            // if(! bookingData){
-            //     alert("Đặt lịch thất bại !");
-            // }else{
-            //      alert("Đặt lịch thành công!");
-            //      navigate(`/booking/courses`)
-            // }
-        }
+  
 
     if (!tutor) { return (<div>loading...</div>) }
 

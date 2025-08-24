@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import tutorService from "../../services/tutor.service";
-import bookingService from "../../services/booking.service";
-import { Link, useNavigate } from "react-router-dom";
+import { Link,  } from "react-router-dom";
 
 interface Availability {
     _id: string;
@@ -26,7 +25,6 @@ interface Tutor {
 
 
 function TutorsList() {
-    const navigate = useNavigate();
     const [tutors, setTutors] = useState<Tutor[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);

@@ -10,9 +10,9 @@ import bookingService from '../services/booking.service';
 function Payment() {
   const navigate = useNavigate();
   const { idTutor } = useParams();
-  const [tutorId, setTutorId] = useState(idTutor || "");
+  const [tutorId] = useState(idTutor || "");
   const [tutor, setTutor] = useState<any>(null);
-  const [date, setDate] = useState(new Date());
+  const [date] = useState(new Date());
 
   const PACKS = [
     { id: 'trial-30', name: 'Học thử', amount: tutor?.price * 0.15 },
